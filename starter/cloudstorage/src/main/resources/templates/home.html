@@ -3,13 +3,19 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css">
-        <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
-        <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{https://fonts.xz.style/serve/inter.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/super-duper-styles.css}">
 
-        <title>Home</title>
+        <title>Super Duper Drive - Home</title>
     </head>
     <body class="p-3 mb-2 bg-light text-black">
+
+        <header>
+            <h1>Super Duper Drive - Home</h1>
+            <nav><a href="/logout">Logout</a></nav>
+        </header>
+
         <div class="container">
             <div id="logoutDiv">
                 <form action="#" method="POST">

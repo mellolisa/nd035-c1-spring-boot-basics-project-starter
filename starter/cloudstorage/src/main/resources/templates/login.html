@@ -3,13 +3,18 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css">
-        <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
-        <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{https://fonts.xz.style/serve/inter.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/super-duper-styles.css}">
 
-        <title>Login</title>
+        <title>Super Duper Drive - Login</title>
     </head>
     <body class="p-3 mb-2 bg-light text-black">
+
+        <header>
+            <h1>Super Duper Drive - Login</h1>
+            <nav><a href="/signup">Or Sign Up for an Account</a></nav>
+        </header>
         <div class="container justify-content-center w-25 p-3" style="background-color: #eeeeee; margin-top: 5em;">
             <h1 class="display-5">Login</h1>
             <form action="#" method="POST">
