@@ -3,47 +3,56 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" th:href="@{https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{https://fonts.xz.style/serve/inter.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/super-duper-styles.css}">
 
-        <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
 
-        <title>Sign Up</title>
+
+        <title>Super Duper Drive - Sign Up</title>
     </head>
-    <body class="p-3 mb-2 bg-light text-black">
-        <div class="container justify-content-center w-50 p-3" style="background-color: #eeeeee; margin-top: 5em;">
-            <div class="form-group">
-                <label><a href="/login">Back to Login</a></label>
-            </div>
+    <body>
+        <p>
+            <header>
+                <h1>Super Duper Drive - Sign Up</h1>
+                <nav><a href="/login">Back to Login</a></nav>
+            </header>
 
-            <h1 class="display-5">Sign Up</h1>
-            <form action="#" th:action="@{/signup}" th:object="${signUpForm}">
-                <div class="alert alert-dark" th:unless="${#firstVisit = true}">
-                    You successfully signed up! Please continue to the <a href="/login">login</a> page.
+            <blockquote>
+                <p>Fill out the form completely to sign up for a new account.</p>
+            <form action="#" th:action="@{/signup}" th:object="${signUpForm}" method="POST">
+                <div class="my-notify-success" th:unless="${firstVisit || errorCode > 0}">
+                    Welcome, <span th:text="${firstName}"></span>! Please continue to the <a href="/login">login</a> page.
                 </div>
-                <div class="alert alert-danger" th:unless="${#firstVisit = true}">
-                    <span th:text="${errorMessage}"></span>
+                <div class="my-notify-error" th:if="${errorCode > 0}">
+                    <span th:text="${errorMessage}"</span>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <p>
                         <label for="inputFirstName">First Name</label>
                         <input type="input" name="firstName" class="form-control" id="inputFirstName" placeholder="Enter First Name" maxlength="20" required th:field="*{firstName}">
-                    </div>
-                    <div class="form-group col-md-6">
+                    </p>
+                    <p>
                         <label for="inputLastName">Last Name</label>
                         <input type="input" name="lastName" class="form-control" id="inputLastName" placeholder="Enter Last Name" maxlength="20" required th:field="*{lastName}">
-                    </div>
+                    </p>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
+                <p class="form-row">
+                    <p>
                         <label for="inputUsername">Username</label>
                         <input type="input" name="username" class="form-control" id="inputUsername" placeholder="Enter Username" maxlength="20" required th:field="*{username}">
-                    </div>
-                    <div class="form-group col-md-6">
+                    </p>
+                    <p>
                         <label for="inputPassword">Password</label>
                         <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Enter Password" maxlength="20" required th:field="*{password}">
-                    </div>
+                    </p>
                 </div>
-                <button type="submit" class="btn btn-primary">Sign Up</button>
+                <a href="#">
+                    <button type="submit">Sign Up</button>
+                </a>
             </form>
+            </blockquote>
         </div>
+
     </body>
 </html>

@@ -15,13 +15,24 @@ public class SignUpController {
     @GetMapping()
     public String firstVisit(@ModelAttribute("signUpForm") SignUpForm signUpForm, Model model) {
         model.addAttribute("firstVisit", true);
+        System.out.println("First Visit is: " + model.getAttribute("firstVisit"));
         return "signup";
     }
 
     @PostMapping()
     public String subsequentVisit(@ModelAttribute("signUpForm") SignUpForm signUpForm, Model model) {
         model.addAttribute("firstVisit", false);
-        model.addAttribute( "errorCode", 0);
+
+        if(signUpForm.getFirstName().startsWith("Lisa")) {
+            model.addAttribute("errorCode", 0);
+            model.addAttribute("firstName", signUpForm.getFirstName());
+        } else {
+            model.addAttribute( "errorCode", 1);
+            model.addAttribute( "errorMessage", "Danger, Will Robinson!");
+        }
+
+        System.out.println("First Visit is: " + model.getAttribute("firstVisit"));
+        System.out.println("Error Code is: " + model.getAttribute("errorCode"));
         return "signup";
     }
 }
