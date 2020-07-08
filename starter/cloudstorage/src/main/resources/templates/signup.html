@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" th:href="@{https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css}">
         <link rel="stylesheet" type="text/css" th:href="@{https://fonts.xz.style/serve/inter.css}">
         <link rel="stylesheet" type="text/css" th:href="@{/css/super-duper-styles.css}">
@@ -17,16 +18,16 @@
                 <nav><a href="/login">Back to Login</a></nav>
             </header>
 
-            <blockquote>
+            <blockquote class="bqform">
                 <p>Fill out the form completely to sign up for a new account.</p>
-            <form action="#" th:action="@{/signup}" th:object="${signUpForm}" method="POST">
+            <form class="pure-form pure-form-aligned" action="#" th:action="@{/signup}" th:object="${signUpForm}" method="POST">
                 <div class="my-notify-success" th:unless="${firstVisit || errorCode > 0}">
                     Welcome, <span th:text="${firstName}"></span>! Please continue to the <a href="/login">login</a> page.
                 </div>
                 <div class="my-notify-error" th:if="${errorCode > 0}">
                     <span th:text="${errorMessage}"</span>
                 </div>
-                <div class="form-row">
+                <fieldset class="pure-control-group">
                     <p>
                         <label for="inputFirstName">First Name</label>
                         <input type="input" name="firstName" class="form-control" id="inputFirstName" placeholder="Enter First Name" maxlength="20" required th:field="*{firstName}">
@@ -35,8 +36,8 @@
                         <label for="inputLastName">Last Name</label>
                         <input type="input" name="lastName" class="form-control" id="inputLastName" placeholder="Enter Last Name" maxlength="20" required th:field="*{lastName}">
                     </p>
-                </div>
-                <p class="form-row">
+                </fieldset>
+                <fieldset class="pure-control-group">
                     <p>
                         <label for="inputUsername">Username</label>
                         <input type="input" name="username" class="form-control" id="inputUsername" placeholder="Enter Username" maxlength="20" required th:field="*{username}">
@@ -45,10 +46,12 @@
                         <label for="inputPassword">Password</label>
                         <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Enter Password" maxlength="20" required th:field="*{password}">
                     </p>
+                </fieldset>
+                <div class="pure-controls">
+                    <a href="#">
+                        <button class="pure-button pure-button-primary" type="submit">Sign Up</button>
+                    </a>
                 </div>
-                <a href="#">
-                    <button type="submit">Sign Up</button>
-                </a>
             </form>
             </blockquote>
         </div>
