@@ -9,34 +9,42 @@
 
         <title>Super Duper Drive - Login</title>
     </head>
-    <body class="p-3 mb-2 bg-light text-black">
+    <body>
 
         <header>
             <h1>Super Duper Drive - Login</h1>
-            <nav><a href="/signup">Or Sign Up for an Account</a></nav>
+            <nav><a href="/signup">Sign Up for an Account</a></nav>
         </header>
-        <div class="container justify-content-center w-25 p-3" style="background-color: #eeeeee; margin-top: 5em;">
-            <h1 class="display-5">Login</h1>
-            <form action="#" method="POST">
-                <div class="alert alert-danger">
-                    Invalid username or password
+        <div>
+            <h1>Login</h1>
+            <blockquote>
+            <form action="#" th:action="@{/login}" th:object="${loginForm}" method="POST">
+                <div class="my-notify-success" th:unless="${firstVisit || param.error}">
+                    Welcome, <span th:text="${username}"></span>! Please continue to your <a href="/home">home</a> page.
                 </div>
-                <div class="alert alert-dark">
-                    You have been logged out
+                <div class="my-notify-error" th:if="${param.error}">
+                    There is an issue with your username or password.  Please try again!
                 </div>
-                <div class="form-group">
-                    <label for="inputUsername">Username</label>
-                    <input type="input" class="form-control" name="username" id="inputUsername" placeholder="Enter Username" maxlength="20" required>
+                <div class="my-notify-info" th:if="${logout}">
+                    <span>You are currently logged out.</span>
                 </div>
-                <div class="form-group">
-                    <label for="inputPassword">Password</label>
-                    <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Enter Password" maxlength="20" required>
+                <div class = "login-fields" th:if="${logout}">
+                    <p><div class="form-group">
+                        <label for="inputUsername">Username</label>
+                        <input type="input" class="form-control" name="username" id="inputUsername" placeholder="Enter Username" maxlength="20" required th:field="*{username}">
+                    </div></p>
+                    <p><div class="form-group">
+                        <label for="inputPassword">Password</label>
+                        <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Enter Password" maxlength="20" required th:field="*{password}">
+                    </div></p>
+                    <a href="#">
+                        <button type="submit">Login</button>
+                    </a>
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
             </form>
-
-            <div class="form-group" style="margin-top: 0.5em;">
-                <label><a>Click here to sign up</a></label>
+            </blockquote>
+            <div>
+                <label><a href="/signup">Don't have an account?  Sign up here!</a></label>
             </div>
         </div>
     </body>
