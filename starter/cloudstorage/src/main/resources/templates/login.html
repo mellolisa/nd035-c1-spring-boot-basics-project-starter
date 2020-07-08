@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" th:href="@{https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css}">
         <link rel="stylesheet" type="text/css" th:href="@{https://fonts.xz.style/serve/inter.css}">
         <link rel="stylesheet" type="text/css" th:href="@{/css/super-duper-styles.css}">
@@ -17,8 +18,8 @@
         </header>
         <div>
             <h1>Login</h1>
-            <blockquote>
-            <form action="#" th:action="@{/login}" th:object="${loginForm}" method="POST">
+            <blockquote class="bqform">
+            <form class="pure-form pure-form-aligned" action="#" th:action="@{/login}" th:object="${loginForm}" method="POST">
                 <div class="my-notify-success" th:unless="${firstVisit || param.error}">
                     Welcome, <span th:text="${username}"></span>! Please continue to your <a href="/home">home</a> page.
                 </div>
@@ -28,19 +29,21 @@
                 <div class="my-notify-info" th:if="${logout}">
                     <span>You are currently logged out.</span>
                 </div>
-                <div class = "login-fields" th:if="${logout}">
-                    <p><div class="form-group">
+                <fieldset class = "login-fields pure-control-group" th:if="${logout}">
+                    <p>
                         <label for="inputUsername">Username</label>
                         <input type="input" class="form-control" name="username" id="inputUsername" placeholder="Enter Username" maxlength="20" required th:field="*{username}">
-                    </div></p>
-                    <p><div class="form-group">
+                    </p>
+                    <p>
                         <label for="inputPassword">Password</label>
                         <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Enter Password" maxlength="20" required th:field="*{password}">
-                    </div></p>
-                    <a href="#">
-                        <button type="submit">Login</button>
-                    </a>
-                </div>
+                    </p>
+                    <div class="pure-controls">
+                        <a href="#">
+                            <button class="pure-button pure-button-primary" type="submit">Login</button>
+                        </a>
+                    </div>
+                </fieldset>
             </form>
             </blockquote>
             <div>
