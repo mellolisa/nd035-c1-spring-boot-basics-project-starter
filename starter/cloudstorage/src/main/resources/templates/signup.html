@@ -31,17 +31,17 @@
                 <fieldset class="pure-control-group">
                     <p>
                         <label for="inputFirstName">First Name</label>
-                        <input type="input" name="firstName" class="form-control" id="inputFirstName" placeholder="Enter First Name" maxlength="20" required th:field="*{firstName}">
+                        <input type="input" name="firstName" class="form-control" id="inputFirstName" placeholder="Enter First Name" maxlength="20" required th:field="*{firstName}" th:value="*{firstName}">
                     </p>
                     <p>
                         <label for="inputLastName">Last Name</label>
-                        <input type="input" name="lastName" class="form-control" id="inputLastName" placeholder="Enter Last Name" maxlength="20" required th:field="*{lastName}">
+                        <input type="input" name="lastName" class="form-control" id="inputLastName" placeholder="Enter Last Name" maxlength="20" required th:field="*{lastName}" th:value ="*{lastName}" >
                     </p>
                 </fieldset>
                 <fieldset class="pure-control-group">
                     <p>
                         <label for="inputUsername">Username</label>
-                        <input type="input" name="username" class="form-control" id="inputUsername" placeholder="Enter Username" maxlength="20" required th:field="*{username}">
+                        <input type="input" name="username" class="form-control" id="inputUsername" placeholder="Enter Username" maxlength="20" required th:field="*{username}" th:value="*{username}">
                     </p>
                     <p>
                         <label for="inputPassword">Password</label>
