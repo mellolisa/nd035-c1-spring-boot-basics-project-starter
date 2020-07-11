@@ -1,6 +1,8 @@
 package com.udacity.jwdnd.course1.cloudstorage.controllers;
 
+import com.udacity.jwdnd.course1.cloudstorage.domain.CreateUserResponse;
 import com.udacity.jwdnd.course1.cloudstorage.forms.SignUpForm;
+import com.udacity.jwdnd.course1.cloudstorage.services.SignUpService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,12 +25,15 @@ public class SignUpController {
     public String subsequentVisit(@ModelAttribute("signUpForm") SignUpForm signUpForm, Model model) {
         model.addAttribute("firstVisit", false);
 
-        if(signUpForm.getFirstName().startsWith("Lisa")) {
+        SignUpService service = new SignUpService();
+        CreateUserResponse response = service.createUser(signUpForm);
+
+        if(response.getErrorCode() == 0) {
             model.addAttribute("errorCode", 0);
             model.addAttribute("firstName", signUpForm.getFirstName());
         } else {
-            model.addAttribute( "errorCode", 1);
-            model.addAttribute( "errorMessage", "Danger, Will Robinson!");
+            model.addAttribute( "errorCode", response.getErrorCode());
+            model.addAttribute( "errorMessage", response.getErrorMessage());
         }
 
         System.out.println("First Visit is: " + model.getAttribute("firstVisit"));
