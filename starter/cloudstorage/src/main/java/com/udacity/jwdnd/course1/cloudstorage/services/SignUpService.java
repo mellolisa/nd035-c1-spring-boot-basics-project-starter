@@ -2,42 +2,69 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.domain.CreateUserResponse;
 import com.udacity.jwdnd.course1.cloudstorage.forms.SignUpForm;
+import com.udacity.jwdnd.course1.cloudstorage.mappers.UserMapper;
+import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import org.springframework.stereotype.Component;
+
+import java.security.SecureRandom;
+import java.util.Base64;
 
 @Component
 public class SignUpService {
-    public CreateUserResponse createUser(SignUpForm form) {
-        CreateUserResponse response = new CreateUserResponse();
-        EncryptionService encryptionService = new EncryptionService();
+    private final UserService userService;
+
+    public SignUpService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public CreateUserResponse handleSignUpForm(SignUpForm form) {
+        CreateUserResponse response;
 
         //get values from sign up form
-        String firstName = form.getFirstName();
-        String lastName = form.getLastName();
-        String username = form.getUsername();
-        String password = form.getPassword();
+        User user = new User();
+        user.setFirstName(form.getFirstName());
+        user.setLastName(form.getLastName());
+        user.setUsername(form.getUsername());
+        user.setPassword(form.getPassword());
 
-        response = inputValidator(form);
+        response = inputValidator(user);
         if(response.getErrorCode() !=0){
             return response;
         }
 
-        //encrypt password
-        //String key = "Test";
-        //String encryptedPassword = encryptionService.encryptValue(password, key);
-
-        //add to database
-
+        //Create new user
+        response = createUser(user);
         return response;
     }
 
-    public CreateUserResponse inputValidator(SignUpForm form){
+    public CreateUserResponse createUser(User user){
+        CreateUserResponse response = new CreateUserResponse();
+
+        String username = user.getUsername();
+        response.setUsername(username);
+
+        //see if username is available
+        if(!userService.isUsernameAvailable(username)){
+            response = getErrorResponse(500);
+            return response;
+        }
+
+        int rowsAdded = userService.createUser(user);
+        if (rowsAdded < 0){
+            response = getErrorResponse(501);
+        }
+        
+        return response;
+    }
+
+    public CreateUserResponse inputValidator(User user){
 
         CreateUserResponse response = new CreateUserResponse();
 
-        String firstName = form.getFirstName();
-        String lastName = form.getLastName();
-        String username = form.getUsername();
-        String password = form.getPassword();
+        String firstName = user.getFirstName();
+        String lastName = user.getLastName();
+        String username = user.getUsername();
+        String password = user.getPassword();
 
         response.setUsername(username);
 
@@ -171,6 +198,12 @@ public class SignUpService {
             case 402:
                 errorMessage = "Password should only contain letters and numbers and the following special characters (!, @, #, $, %, *).";
                 break;
+            case 500:
+                errorMessage = "Username is not available - please try again!";
+                break;
+            case 501:
+                errorMessage = "Database error - please try again!";
+                break;
             default:
                 //error is unknown
         }
@@ -178,4 +211,5 @@ public class SignUpService {
         response.setErrorMessage(errorMessage);
         return response;
     }
+
 }
