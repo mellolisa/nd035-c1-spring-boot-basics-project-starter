@@ -53,7 +53,7 @@ public class SignUpService {
         if (rowsAdded < 0){
             response = getErrorResponse(501);
         }
-        
+
         return response;
     }
 
