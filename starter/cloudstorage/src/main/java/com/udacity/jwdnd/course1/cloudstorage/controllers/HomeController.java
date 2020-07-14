@@ -8,14 +8,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/login")
-public class LoginController {
+@RequestMapping("/home")
+public class HomeController {
 
     @GetMapping()
     public String showLoginPage(@ModelAttribute("loginForm") LoginForm loginForm, Model model) {
         model.addAttribute("firstVisit", true);
-        model.addAttribute("logout", true);
-        System.out.println("Login First Visit is: " + model.getAttribute("firstVisit"));
-        return "login";
+        System.out.println("Home First Visit is: " + model.getAttribute("firstVisit"));
+        return "home";
     }
 }
