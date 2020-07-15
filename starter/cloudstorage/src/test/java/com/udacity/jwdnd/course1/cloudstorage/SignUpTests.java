@@ -43,7 +43,7 @@ class SignUpTests {
 	}
 
 	@Test
-	public void signUpPageErrors() throws InterruptedException {
+	public void signUpPageTests() throws InterruptedException {
 		//start the driver, open chrome to our target url
 		driver.get("http://localhost:" + this.port + "/signup");
 
