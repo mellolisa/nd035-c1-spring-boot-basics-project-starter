@@ -2,14 +2,11 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import com.udacity.jwdnd.course1.cloudstorage.domain.CreateUserResponse;
 import com.udacity.jwdnd.course1.cloudstorage.forms.SignUpForm;
-import com.udacity.jwdnd.course1.cloudstorage.mappers.UserMapper;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
-import java.util.Base64;
 
-@Component
+@Service
 public class SignUpService {
     private final UserService userService;
 
