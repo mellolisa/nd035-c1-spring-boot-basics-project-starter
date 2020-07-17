@@ -128,61 +128,67 @@
                     <h3>Credentials</h3>
                     <details>
                         <summary>Manage Credentials</summary>
-                        <div class="tab-pane fade" id="nav-credentials" role="tabpanel" aria-labelledby="nav-credentials-tab">
-                        <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showCredentialModal()">
-                            + Add a New Credential
-                        </button>
+                        <div id="nav-credentials" class="pure-controls" role="section" aria-labelledby="nav-credentials-section">
+                                <a href="#">
+                                    <button style="margin: 0.25em;" type="button" class="pure-button" onclick="showCredentialModal()">
+                                        + Add a New Credential
+                                    </button>
+                                </a>
 
-                        <div class="table-responsive">
-                            <table class="table table-striped" th:object="${credentials}" id="credentialTable">
-                                <thead>
+                            <div class="no-credentials" th:unless="${showCredentials}">
+                                <p>No Credentials have been added to the system.</p>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-striped" th:object="${credentials}" id="credentialTable" th:if="${showCredentials}">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 20%" scope="col"></th>
+                                            <th style="width: 35%" scope="col">URL</th>
+                                            <th style="width: 20%" scope="col">Username</th>
+                                            <th style="width: 25%" scope="col">Password</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                     <tr>
-                                        <th style="width: 20%" scope="col"></th>
-                                        <th style="width: 35%" scope="col">URL</th>
-                                        <th style="width: 20%" scope="col">Username</th>
-                                        <th style="width: 25%" scope="col">Password</th>
+                                        <td>
+                                                <button type="button" class="btn btn-success">Edit</button>
+                                                <a class="btn btn-danger">Delete</a>
+                                        </td>
+                                            <th scope="row">Example Credential URL</th>
+                                            <td>Example Credential Username</td>
+                                            <td>Example Credential Password</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn btn-success">Edit</button>
-                                        <a class="btn btn-danger">Delete</a>
-                                    </td>
-                                    <th scope="row">Example Credential URL</th>
-                                    <td>Example Credential Username</td>
-                                    <td>Example Credential Password</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                        <div class="modal fade" id="credentialModal" tabindex="-1" role="dialog" aria-labelledby="credentialModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="credentialModalLabel">Credential</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="#" method="POST">
-                                            <input type="hidden" name="credentialId" id="credential-id">
-                                            <div class="form-group">
-                                                <label for="note-title" class="col-form-label">URL</label>
-                                                <input type="text" name= "url" class="form-control" id="credential-url" maxlength="100" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="note-title" class="col-form-label">Username</label>
-                                                <input type="text" name= "username" class="form-control" id="credential-username" maxlength="30" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="note-title" class="col-form-label">Password</label>
-                                                <input type="text" name= "password" class="form-control" id="credential-password" maxlength="30" required>
-                                            </div>
-                                            <button id="credentialSubmit" type="submit" class="d-none"></button>
-                                        </form>
+                            <div class="modal fade" id="credentialModal" tabindex="-1" role="dialog" aria-labelledby="credentialModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="credentialModalLabel">Credential</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="#" th:action="@{/home}" th:object="${credentialsForm}"method="POST">
+                                                <input type="hidden" name="credentialId" id="credential-id">
+                                                <div class="form-group">
+                                                    <label for="note-title" class="col-form-label">URL</label>
+                                                    <input type="text" name= "url" class="form-control" id="credential-url" maxlength="100" required th:field="*{url}" th:value="*{url}">
+                                                </div>
+                                                <div class="form-group">
+                                                        <label for="note-title" class="col-form-label">Username</label>
+                                                    <input type="text" name= "username" class="form-control" id="credential-username" maxlength="30" required th:field="*{username}" th:value="*{username}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="note-title" class="col-form-label">Password</label>
+                                                    <input type="text" name= "password" class="form-control" id="credential-password" maxlength="30" required th:field="*{password}" th:value="*{password}">
+                                                </div>
+                                                <button id="credentialSubmit" type="submit" class="d-none"></button>
+                                            </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
