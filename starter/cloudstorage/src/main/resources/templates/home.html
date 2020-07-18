@@ -3,15 +3,15 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" th:href="@{https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css}">
         <link rel="stylesheet" type="text/css" th:href="@{https://fonts.xz.style/serve/inter.css}">
         <link rel="stylesheet" type="text/css" th:href="@{/css/super-duper-styles.css}">
-        <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/css/bootstrap-modal.min.css}">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <title>Super Duper Drive - Home</title>
     </head>
-    <body class="p-3 mb-2 bg-light text-black">
+    <body>
 
         <header>
             <h1>Super Duper Drive - Home</h1>
@@ -19,14 +19,14 @@
         </header>
 
         <h1>Home</h1>
-        <div class="container">
+        <div>
 
             <div id="contentDiv" style="clear: right;">
                 <div class="tab-content" id="nav-tabContent">
                     <h2>Files</h2>
                     <details>
                         <summary>Manage Files</summary>
-                        <div class="tab-pane fade show active" id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
+                        <div id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
                         <form action="#" enctype="multipart/form-data" method="POST">
                             <div class="container">
                                 <div class="row" style="margin: 1em;">
@@ -66,7 +66,7 @@
                     <h2>Notes</h2>
                     <details>
                         <summary>Manage Notes</summary>
-                        <div class="tab-pane fade" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
+                        <div id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
                             <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
                                 + Add a New Note
                             </button>
@@ -130,7 +130,7 @@
                         <summary>Manage Credentials</summary>
                         <div id="nav-credentials" class="pure-controls" role="section" aria-labelledby="nav-credentials-section">
                                 <a href="#">
-                                    <button style="margin: 0.25em;" type="button" class="pure-button" onclick="showCredentialModal()">
+                                    <button  type="button" class="pure-button" onclick="showCredentialModal()">
                                         + Add a New Credential
                                     </button>
                                 </a>
@@ -139,8 +139,8 @@
                                 <p>No Credentials have been added to the system.</p>
                             </div>
 
-                            <div class="table-responsive">
-                                <table class="table table-striped" th:object="${credentials}" id="credentialTable" th:if="${showCredentials}">
+                            <div>
+                                <table th:object="${credentials}" id="credentialTable" th:if="${showCredentials}">
                                     <thead>
                                         <tr>
                                             <th style="width: 20%" scope="col"></th>
@@ -152,7 +152,7 @@
                                     <tbody>
                                     <tr th:each="cred : ${credentials}">
                                         <td>
-                                                <button id="editCredential" type="button" class="pure-button">Edit</button>
+                                                <button id="editCredential" type="button" class="pure-button" data-toggle="modal" data-target="#credentialModal">Edit</button>
                                                 <a id="deleteCredential" th:href="@{/home/{id}(id=${cred.credentialId},action='deleteCredential')}" class="btn btn-danger">Delete</a>
                                         </td>
                                             <th scope="row" th:text="${{cred.url}}">Example Credential URL</th>
@@ -167,7 +167,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="credentialModalLabel">Credential</h5>
+                                            <h2 class="modal-title" id="credentialModalLabel">Credential</h2>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -187,7 +187,7 @@
                                                     <label for="note-title" class="col-form-label">Password</label>
                                                     <input type="text" name= "password" class="form-control" id="credential-password" maxlength="30" required th:field="*{password}" th:value="*{password}">
                                                 </div>
-                                                <button id="credentialSubmit" type="submit" class="d-none"></button>
+                                                <button id="credentialSubmit" type="submit" class="pure-button"></button>
                                             </form>
                                     </div>
                                     <div class="modal-footer">
@@ -203,13 +203,12 @@
             </div>
         </div>
 
-        <script th:src="@{/js/jquery-slim.min.js}"></script>
-        <script th:src="@{/js/popper.min.js}"></script>
-        <script th:src="@{/js/bootstrap.min.js}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 
         <!--For opening the note modal-->
 
-        <script type="text/javascript">
+        <script th:inline="javascript" type="text/javascript">
             // For opening the note modal
             function showNoteModal(noteId, noteTitle, noteDescription) {
                 $('#note-id').val(noteId ? noteId : '');
