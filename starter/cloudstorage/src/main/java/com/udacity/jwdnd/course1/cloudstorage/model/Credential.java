@@ -4,7 +4,7 @@ public class Credential {
     private int credentialId;
     private int userId;
     private String username;
-    private String salt;
+    private String key;
     private String password;
     private String url;
 
@@ -32,12 +32,12 @@ public class Credential {
         this.username = username;
     }
 
-    public String getSalt() {
-        return salt;
+    public String getKey() {
+        return key;
     }
 
-    public void setSalt(String salt) {
-        this.salt = salt;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getPassword() {
@@ -63,7 +63,7 @@ public class Credential {
                 "credentialId=" + credentialId +
                 ", userId=" + userId +
                 ", username='" + username + '\'' +
-                ", salt='" + salt + '\'' +
+                ", key='" + key + '\'' +
                 ", url='" + url + '\'' +
                 '}';
     }

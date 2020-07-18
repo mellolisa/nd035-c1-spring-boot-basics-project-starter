@@ -30,6 +30,12 @@ public class HomeController {
 
         String username = authentication.getName();
 
+        //mock data
+        credentialsForm.setUrl("http://www.google.com");
+        credentialsForm.setUsername("lisav");
+        credentialsForm.setPassword("aaaaa");
+        credentialService.handleCredentialsForm(credentialsForm, username);
+
         List<Credential> credentials = credentialService.getCredentials(username);
         if(!credentials.isEmpty()) {
             model.addAttribute("showCredentials", true);
@@ -37,7 +43,7 @@ public class HomeController {
         }
 
         System.out.println("Home First Visit is: " + model.getAttribute("firstVisit"));
-        System.out.println("Credentials: " + credentials);
+        System.out.println("Credentials: " + model.getAttribute("credentials"));
         return "home";
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public interface CredentialMapper {
         @Select("SELECT * FROM CREDENTIALS WHERE userid = #{userId}")
         List<Credential> getCredentials(int userId);
-        @Insert("INSERT INTO CREDENTIALS (username, salt, password, url, userId, credentialId) VALUES(#{username}, #{salt}, #{password}, #{url}, #{userid}, #{credentaialid})")
+        @Insert("INSERT INTO CREDENTIALS (username, key, password, url, userid, credentialid) VALUES(#{username}, #{key}, #{password}, #{url}, #{userId}, #{credentialId})")
         @Options(useGeneratedKeys = true, keyProperty = "credentialId")
         int insert(Credential credential);
 }
