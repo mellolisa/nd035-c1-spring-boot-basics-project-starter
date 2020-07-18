@@ -7,9 +7,7 @@ import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +22,9 @@ public class HomeController {
     }
 
     @GetMapping()
-    public String showHomePage(Authentication authentication, @ModelAttribute("credentialsForm") CredentialsForm credentialsForm, Model model) {
+    public String showHomePage(Authentication authentication,
+                               @ModelAttribute("credentialsForm") CredentialsForm credentialsForm,
+                               Model model) {
         model.addAttribute("firstVisit", true);
         model.addAttribute("showCredentials", false);
 
@@ -47,5 +47,16 @@ public class HomeController {
         System.out.println("Home First Visit is: " + model.getAttribute("firstVisit"));
         System.out.println("Credentials: " + model.getAttribute("credentials"));
         return "home";
+    }
+
+    @GetMapping("/{id}")
+    public String triggerActions(Authentication authentication, @PathVariable(value="id") String id,
+            @RequestParam(required = false) String action){
+
+        if(credentialService.deleteCredential(Integer.parseInt(id)) == 0){
+            System.out.println("Deleted credential: " + id);
+        }
+
+        return "redirect:/home";
     }
 }

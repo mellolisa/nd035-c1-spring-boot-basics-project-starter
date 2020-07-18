@@ -34,7 +34,7 @@ public class CredentialService {
 
         int status = addCredential(credential);
         //just to see if it works
-        status = deleteCredential(0);
+        //status = deleteCredential(0);
         return status;
     }
 

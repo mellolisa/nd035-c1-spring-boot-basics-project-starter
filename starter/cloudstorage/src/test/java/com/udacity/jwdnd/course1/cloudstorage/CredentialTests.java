@@ -78,6 +78,10 @@ class CredentialTests {
         inputField.submit();
         Thread.sleep(1000);
 
+        //delete credential
+        driver.get("http://localhost:" + this.port + "/home/0?action=credentialDelete");
+        Thread.sleep(1000);
+
     }
 
 }
