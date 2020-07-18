@@ -77,7 +77,7 @@ class CredentialTests {
 
         inputField.submit();
         Thread.sleep(1000);
-        
+
     }
 
 }

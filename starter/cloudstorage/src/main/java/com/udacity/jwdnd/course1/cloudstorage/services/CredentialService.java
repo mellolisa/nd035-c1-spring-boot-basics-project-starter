@@ -33,6 +33,8 @@ public class CredentialService {
         credential.setKey("aaaaa");
 
         int status = addCredential(credential);
+        //just to see if it works
+        status = deleteCredential(0);
         return status;
     }
 
@@ -45,6 +47,13 @@ public class CredentialService {
     public int addCredential(Credential credential){
 
         int status = credentialMapper.insert(credential);
+
+        return status;
+    }
+
+    public int deleteCredential(int credentialId){
+
+        int status = credentialMapper.delete(credentialId);
 
         return status;
     }

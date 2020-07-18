@@ -34,7 +34,9 @@ public class HomeController {
         credentialsForm.setUrl("http://www.google.com");
         credentialsForm.setUsername("lisav");
         credentialsForm.setPassword("aaaaa");
-        credentialService.handleCredentialsForm(credentialsForm, username);
+        if(model.getAttribute("firstVisit").equals(true)) {
+            credentialService.handleCredentialsForm(credentialsForm, username);
+        }
 
         List<Credential> credentials = credentialService.getCredentials(username);
         if(!credentials.isEmpty()) {
