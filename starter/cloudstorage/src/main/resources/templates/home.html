@@ -152,8 +152,12 @@
                                     <tbody>
                                     <tr th:each="cred : ${credentials}">
                                         <td>
-                                                <button id="editCredential" type="button" class="pure-button" data-toggle="modal" data-target="#credentialModal">Edit</button>
-                                                <a id="deleteCredential" th:href="@{/home/{id}(id=${cred.credentialId},action='deleteCredential')}" class="btn btn-danger">Delete</a>
+                                                <a href="th:href="@{/home/{id}(id=${cred.credentialId},action='editCredential')}"">
+                                                    <button id="editCredential" type="button" class="pure-button" data-toggle="modal" data-target="#credentialModal">Edit</button>
+                                                </a>
+                                                <a href="th:href="@{/home/{id}(id=${cred.credentialId},action='deleteCredential')}"">
+                                                    <button id="deleteCredential" type="button" class="pure-button">Delete</button>
+                                                </a>
                                         </td>
                                             <th scope="row" th:text="${{cred.url}}">Example Credential URL</th>
                                             <td th:text="${{cred.username}}">Example Credential Username</td>
@@ -173,26 +177,36 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="#" th:action="@{/home}" th:object="${credentialsForm}"method="POST">
+                                            <form class="pure-form pure-form-aligned" action="#" th:action="@{/home}" th:object="${credentialsForm}"method="POST">
                                                 <input type="hidden" name="credentialId" id="credential-id">
-                                                <div class="form-group">
-                                                    <label for="note-title" class="col-form-label">URL</label>
-                                                    <input type="text" name= "url" class="form-control" id="credential-url" maxlength="100" required th:field="*{url}" th:value="*{url}">
-                                                </div>
-                                                <div class="form-group">
+                                                <fieldset class="pure-control-group">
+                                                    <p>
+                                                        <label for="note-title" class="col-form-label">URL</label>
+                                                        <input type="text" name= "url" class="form-control" id="credential-url" maxlength="100" required th:field="*{url}" th:value="*{url}">
+                                                    </p>
+                                                    <p>
                                                         <label for="note-title" class="col-form-label">Username</label>
-                                                    <input type="text" name= "username" class="form-control" id="credential-username" maxlength="30" required th:field="*{username}" th:value="*{username}">
+                                                        <input type="text" name= "username" class="form-control" id="credential-username" maxlength="30" required th:field="*{username}" th:value="*{username}">
+                                                    </p>
+                                                    <p>
+                                                        <label for="note-title" class="col-form-label">Password</label>
+                                                        <input type="text" name= "password" class="form-control" id="credential-password" maxlength="30" required th:field="*{password}" th:value="*{password}">
+                                                    </p>
+                                                </fieldset>
+                                                <div class="pure-controls">
+                                                    <a href="#">
+                                                        <button class="pure-button pure-button-primary" type="submit">Save</button>
+                                                    </a>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="note-title" class="col-form-label">Password</label>
-                                                    <input type="text" name= "password" class="form-control" id="credential-password" maxlength="30" required th:field="*{password}" th:value="*{password}">
-                                                </div>
-                                                <button id="credentialSubmit" type="submit" class="pure-button"></button>
                                             </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="$('#credentialSubmit').click();">Save changes</button>
+                                        <div class="pure-controls">
+                                            <a href="#">
+                                                <button type="button" class="pure-button" data-dismiss="modal">Close</button>
+                                            </a>
+                                        </div>
+                                        <!-- <button type="button" class="btn btn-primary" onclick="$('#credentialSubmit').click();">Save changes</button> -->
                                     </div>
                                 </div>
                             </div>
