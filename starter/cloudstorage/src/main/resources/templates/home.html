@@ -7,7 +7,7 @@
         <link rel="stylesheet" type="text/css" th:href="@{https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css}">
         <link rel="stylesheet" type="text/css" th:href="@{https://fonts.xz.style/serve/inter.css}">
         <link rel="stylesheet" type="text/css" th:href="@{/css/super-duper-styles.css}">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
 
         <title>Super Duper Drive - Home</title>
     </head>
@@ -126,11 +126,17 @@
                     </div>
                     </details>
                     <h3>Credentials</h3>
-                    <details>
+                    <details th:open="${toggleCredentials}">
                         <summary>Manage Credentials</summary>
+                        <div class="my-notify-success" th:if="${credSuccess}">
+                            <span th:text="${credSuccess}"></span>
+                        </div>
+                        <div class="my-notify-error" th:if="${credError}">
+                            <span th:text="${credError}"</span>
+                        </div>
                         <div id="nav-credentials" class="pure-controls" role="section" aria-labelledby="nav-credentials-section">
                                 <a href="#">
-                                    <button  type="button" class="pure-button" onclick="showCredentialModal()">
+                                    <button id="addCredential" type="button" class="pure-button" data-toggle="modal" data-target="#credentialModal">
                                         + Add a New Credential
                                     </button>
                                 </a>
@@ -152,10 +158,10 @@
                                     <tbody>
                                     <tr th:each="cred : ${credentials}">
                                         <td>
-                                                <a href="th:href="@{/home/{id}(id=${cred.credentialId},action='editCredential')}"">
+                                                <a href="#">
                                                     <button id="editCredential" type="button" class="pure-button" data-toggle="modal" data-target="#credentialModal">Edit</button>
                                                 </a>
-                                                <a href="th:href="@{/home/{id}(id=${cred.credentialId},action='deleteCredential')}"">
+                                                <a th:href="@{/home/{id}(id=${cred.credentialId},action='deleteCredential')}">
                                                     <button id="deleteCredential" type="button" class="pure-button">Delete</button>
                                                 </a>
                                         </td>
@@ -218,7 +224,7 @@
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+        <script src="/js/bootstrap.min.js" ></script>
 
         <!--For opening the note modal-->
 
