@@ -28,13 +28,24 @@ public class CredentialService {
         credential.setUrl(form.getUrl());
         credential.setUsername(form.getUsername());
         credential.setPassword(form.getPassword());
+        String action = form.getCredActionType();
+        String credentialId = form.getCredentialId();
+        if(!credentialId.isEmpty()){
+            credential.setCredentialId(Integer.parseInt(credentialId));
+        }
 
         //mock data
         credential.setKey("aaaaa");
 
-        int status = addCredential(credential);
-        //just to see if it works
-        //status = deleteCredential(0);
+        int status = 100;
+
+        if(action.contains("Add")){
+            status = addCredential(credential);
+        } else if(action.contains("Edit")){
+            status = editCredential(credential);
+        }
+
+        System.out.println("Status: " + status);
         return status;
     }
 
@@ -54,6 +65,13 @@ public class CredentialService {
     public int deleteCredential(int credentialId){
 
         int status = credentialMapper.delete(credentialId);
+
+        return status;
+    }
+
+    public int editCredential(Credential credential){
+
+        int status = credentialMapper.update(credential);
 
         return status;
     }

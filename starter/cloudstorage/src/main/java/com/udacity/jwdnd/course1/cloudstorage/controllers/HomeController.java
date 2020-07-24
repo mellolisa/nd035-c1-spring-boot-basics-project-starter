@@ -2,6 +2,7 @@ package com.udacity.jwdnd.course1.cloudstorage.controllers;
 
 import com.udacity.jwdnd.course1.cloudstorage.forms.CredentialsForm;
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
+import com.udacity.jwdnd.course1.cloudstorage.services.AuthenticationService;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -30,11 +31,14 @@ public class HomeController {
 
     @GetMapping("/{id}")
     public String deleteActions(Authentication authentication, @ModelAttribute("credentialsForm") CredentialsForm credentialsForm, Model model,
-                                @PathVariable(value="id") String id,
-            @RequestParam(required = false) String action){
+                                @PathVariable(value="id") String credId,
+                                @RequestParam(required = false) String action){
+
+        int id = Integer.parseInt(credId);
 
         model.addAttribute("toggleCredentials", true);
-        if(credentialService.deleteCredential(Integer.parseInt(id)) == 1){
+
+        if(credentialService.deleteCredential(id) == 1){
             System.out.println("Deleted credential: " + id);
             model.addAttribute("credSuccess", "The delete action was successful.");
         }
@@ -50,16 +54,16 @@ public class HomeController {
     @PostMapping()
     public String postActions(Authentication authentication,
                               @ModelAttribute("credentialsForm") CredentialsForm credentialsForm,
-                              Model model,
-                              @RequestParam(required = false) String id,
-                              @RequestParam(required = false) String action){
+                              Model model){
 
         model.addAttribute("toggleCredentials", true);
+        String formAction = credentialsForm.getCredActionType();
+
         if(credentialService.handleCredentialsForm(credentialsForm, authentication.getName()) > 0){
-            System.out.println("Added credential: " + credentialsForm.getUrl());
-            model.addAttribute("credSuccess", "The insert action was successful.");
+            System.out.println("Credential Action: " + formAction);
+            model.addAttribute("credSuccess", "The " + formAction + " action was successful.");
         } else {
-            model.addAttribute("credError", "The insert action was unsuccessful.");
+            model.addAttribute("credError", "The " + formAction + " action was unsuccessful.");
         }
 
         showHomePage(authentication, credentialsForm, model);

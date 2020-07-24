@@ -136,7 +136,7 @@
                         </div>
                         <div id="nav-credentials" class="pure-controls" role="section" aria-labelledby="nav-credentials-section">
                                 <a href="#">
-                                    <button id="addCredential" type="button" class="pure-button" data-toggle="modal" data-target="#credentialModal">
+                                    <button id="addCredential" type="button" class="pure-button" data-toggle="modal" data-target="#credentialModal" th:data-credAction="Add" onclick="showCredModal(this.getAttribute('data-credAction'))">
                                         + Add a New Credential
                                     </button>
                                 </a>
@@ -159,7 +159,9 @@
                                     <tr th:each="cred : ${credentials}">
                                         <td>
                                                 <a href="#">
-                                                    <button id="editCredential" type="button" class="pure-button" data-toggle="modal" data-target="#credentialModal">Edit</button>
+                                                    <button id="editCredential" type="button" class="pure-button" data-toggle="modal" data-target="#credentialModal"
+                                                     th:data-credAction="Edit" th:data-credId="${cred.credentialId}" th:data-credUrl="${cred.url}" th:data-credUsername="${cred.username}" th:data-credPassword="${cred.password}"
+                                                            onclick="showCredModal(this.getAttribute('data-credAction'), this.getAttribute('data-credId'), this.getAttribute('data-credUrl'), this.getAttribute('data-credUsername'), this.getAttribute('data-credPassword'))">Edit</button>
                                                 </a>
                                                 <a th:href="@{/home/{id}(id=${cred.credentialId},action='deleteCredential')}">
                                                     <button id="deleteCredential" type="button" class="pure-button">Delete</button>
@@ -183,8 +185,9 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form class="pure-form pure-form-aligned" action="#" th:action="@{/home}" th:object="${credentialsForm}"method="POST">
+                                            <form class="pure-form pure-form-aligned" action="#" th:action="@{/home}" th:object="${credentialsForm}" method="POST">
                                                 <input type="hidden" name="credentialId" id="credential-id">
+                                                <input type="hidden" name="credActionType" id="cred-action-type">
                                                 <fieldset class="pure-control-group">
                                                     <p>
                                                         <label for="note-title" class="col-form-label">URL</label>
@@ -201,7 +204,7 @@
                                                 </fieldset>
                                                 <div class="pure-controls">
                                                     <a href="#">
-                                                        <button class="pure-button pure-button-primary" type="submit">Save</button>
+                                                        <button class="pure-button pure-button-primary" type="submit" th:text="${credActionType}">Save</button>
                                                     </a>
                                                 </div>
                                             </form>
@@ -239,12 +242,13 @@
             }
 
             // For opening the credentials modal
-            function showCredentialModal(credentialId, url, username, password) {
-                $('#credential-id').val(credentialId ? credentialId : '');
+            function showCredModal(credAction, credentialId, url, username, password) {
+                $('#cred-action-type').val(credAction ? credAction : 'Add');
+                $('#credential-id').val(credentialId ? credentialId : 0);
                 $('#credential-url').val(url ? url : '');
                 $('#credential-username').val(username ? username : '');
                 $('#credential-password').val(password ? password : '');
-                $('#credentialModal').modal('show');
+                //$('#credentialModal').modal('show');
             }
         </script>
     </body>
