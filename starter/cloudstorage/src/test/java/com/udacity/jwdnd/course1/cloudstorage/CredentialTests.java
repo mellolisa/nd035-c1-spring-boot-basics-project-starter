@@ -32,7 +32,7 @@ class CredentialTests {
     @AfterEach
     public void afterEach() {
         if (this.driver != null) {
-            driver.quit();
+     //       driver.quit();
         }
     }
 
@@ -81,9 +81,9 @@ class CredentialTests {
         addCredentials("3", "http://www.test3.com", "test3", "test333");
 
         //edit credentials
-        //editCredentials("credEdit1", "http://wwww.test.comaaa", "testingaaa", "test123aaa");
-        //editCredentials("credEdit2", "http://www.testagain.comaaa", "test2aaa", "test123123aaa");
-        //editCredentials("credEdit3", "http://www.test3.comaaa", "test3aaa", "test333aaa");
+        editCredentials("credEdit1", "http://wwww.test.comaaa", "testingaaa", "test123aaa");
+        editCredentials("credEdit2", "http://www.testagain.comaaa", "test2aaa", "test123123aaa");
+        editCredentials("credEdit3", "http://www.test3.comaaa", "test3aaa", "test333aaa");
 
         //delete credentials
         deleteCredentials("credDelete1");
@@ -126,14 +126,18 @@ class CredentialTests {
     public void editCredentials(String className, String url, String username, String password) throws InterruptedException {
         WebElement inputField = driver.findElement(By.className(className));
         inputField.click();
+        Thread.sleep(1000);
 
         inputField = driver.findElement(By.id("credential-url"));
+        inputField.clear();
         inputField.sendKeys(url);
 
         inputField = driver.findElement(By.id("credential-username"));
+        inputField.clear();
         inputField.sendKeys(username);
 
         inputField = driver.findElement(By.id("credential-password"));
+        inputField.clear();
         inputField.sendKeys(password);
 
         inputField.submit();
