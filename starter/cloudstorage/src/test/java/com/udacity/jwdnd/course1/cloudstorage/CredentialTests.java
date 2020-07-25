@@ -32,7 +32,7 @@ class CredentialTests {
     @AfterEach
     public void afterEach() {
         if (this.driver != null) {
-     //       driver.quit();
+            driver.quit();
         }
     }
 
@@ -112,6 +112,8 @@ class CredentialTests {
 
         List<WebElement> successResults = driver.findElements(By.className("my-notify-success"));
         Assertions.assertEquals("The Add action was successful.", successResults.get(0).getText());
+
+        verifyViewValues(id, url, username, password);
     }
 
     public void deleteCredentials(String className) throws InterruptedException{
@@ -124,6 +126,8 @@ class CredentialTests {
     }
 
     public void editCredentials(String className, String url, String username, String password) throws InterruptedException {
+        String id = className.substring(className.length() - 1);
+
         WebElement inputField = driver.findElement(By.className(className));
         inputField.click();
         Thread.sleep(1000);
@@ -145,6 +149,17 @@ class CredentialTests {
 
         List<WebElement> successResults = driver.findElements(By.className("my-notify-success"));
         Assertions.assertEquals("The Edit action was successful.", successResults.get(0).getText());
+
+        verifyViewValues(id, url, username, password);
+    }
+
+    public void verifyViewValues(String id, String url, String username, String password){
+        List<WebElement> viewValue = driver.findElements(By.className("credViewUrl" + id));
+        Assertions.assertEquals(url, viewValue.get(0).getText());
+        viewValue = driver.findElements(By.className("credViewUsername" + id));
+        Assertions.assertEquals(username, viewValue.get(0).getText());
+        viewValue = driver.findElements(By.className("credViewPassword" + id));
+        Assertions.assertEquals(password, viewValue.get(0).getText());
     }
 
 }
