@@ -64,15 +64,27 @@
                     </div>
                     </details>
                     <h2>Notes</h2>
-                    <details>
+                    <details  id="noteSection" th:open="${toggleNotes}">
                         <summary>Manage Notes</summary>
+                        <div class="note-notify-success my-notify-success" th:if="${noteSuccess}">
+                            <span th:text="${noteSuccess}"></span>
+                        </div>
+                        <div class="note-notify-error my-notify-error" th:if="${noteError}">
+                            <span th:text="${noteError}"</span>
+                        </div>
                         <div id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
-                            <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
-                                + Add a New Note
-                            </button>
+                            <a href="#">
+                                <button id="addNote" type="button" class="pure-button" data-toggle="modal" data-target="#noteModal" th:data-noteAction="Add" onclick="showNoteModal(this.getAttribute('data-noteAction'))">
+                                    + Add a New Note
+                                </button>
+                            </a>
 
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="userTable">
+                            <div class="no-notes" th:unless="${showNotes}">
+                                <p>No Notes have been added to the system.</p>
+                            </div>
+
+                        <div>
+                            <table th:object="${notes}" id="noteTable" th:if="${showNotes}">
                                 <thead>
                                     <tr>
                                         <th style="width: 20%" scope="col"></th>
@@ -81,14 +93,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <button type="button" class="btn btn-success">Edit</button>
-                                            <a class="btn btn-danger">Delete</a>
-                                        </td>
-                                        <th scope="row">Example Note Title</th>
-                                        <td>Example Note Description </td>
-                                    </tr>
+                                <tr th:each="note : ${notes}">
+                                    <td>
+                                        <a href="#">
+                                            <button th:class="${'noteEdit' + note.noteId}" id="editNote" type="button" class="pure-button" data-toggle="modal" data-target="#noteModal"
+                                                    th:data-noteAction="Edit" th:data-noteId="${note.noteId}" th:data-noteTitle="${note.noteTitle}" th:data-noteDescription="${note.noteDescription}"
+                                                    onclick="showNoteModal(this.getAttribute('data-noteAction'), this.getAttribute('data-noteId'), this.getAttribute('data-noteTitle'), this.getAttribute('data-noteDescription'))">Edit</button>
+                                        </a>
+                                        <a th:href="@{/home/note/{id}(id=${note.noteId})}">
+                                            <button th:class="${'noteDelete' + note.noteId}" id="deleteNote" type="button" class="pure-button">Delete</button>
+                                        </a>
+                                    </td>
+                                    <th th:class="${'noteViewTitle' + note.noteId}" scope="row" th:text="${{note.noteTitle}}">Example Note Title</th>
+                                    <td th:class="${'noteViewDescription' + note.noteId}" th:text="${{note.noteDescription}}">Example Note Description</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -103,22 +121,28 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="#" method="POST">
+                                        <form action="#" th:action="@{/home/note}" th:object="${notesForm}" method="POST">
                                             <input type="hidden" name="noteId" id="note-id">
-                                            <div class="form-group">
-                                                <label for="note-title" class="col-form-label">Title</label>
-                                                <input type="text" name= "noteTitle" class="form-control" id="note-title" maxlength="20" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="note-description" class="col-form-label">Description</label>
-                                                <textarea class="form-control" name="noteDescription" id="note-description" rows="5" maxlength="1000" required></textarea>
-                                            </div>
+                                            <input type="hidden" name="noteActionType" id="note-action-type">
+                                            <fieldset class="pure-control-group">
+                                                <p>
+                                                    <label for="note-title" class="col-form-label">Title</label>
+                                                    <input type="text" name= "noteTitle" class="form-control" id="note-title" maxlength="20" required th:field="*{title}" th:value="*{title}">
+                                                </p>
+                                                <p>
+                                                    <label for="note-description" class="col-form-label">Description</label>
+                                                    <textarea class="form-control" name="noteDescription" id="note-description" rows="5" maxlength="1000" required th:field="*{description}" th:value="*{description}"></textarea>
+                                                </p>
+                                            </fieldset>
                                             <button id="noteSubmit" type="submit" class="d-none"></button>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();">Save changes</button>
+                                        <div class="pure-controls">
+                                            <a href="#">
+                                                <button class="pure-button pure-button-primary" type="submit" th:text="${noteActionType}">Save</button>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -128,10 +152,10 @@
                     <h3>Credentials</h3>
                     <details id="credSection" th:open="${toggleCredentials}">
                         <summary>Manage Credentials</summary>
-                        <div class="my-notify-success" th:if="${credSuccess}">
+                        <div class="cred-notify-success my-notify-success" th:if="${credSuccess}">
                             <span th:text="${credSuccess}"></span>
                         </div>
-                        <div class="my-notify-error" th:if="${credError}">
+                        <div class="cred-notify-error my-notify-error" th:if="${credError}">
                             <span th:text="${credError}"</span>
                         </div>
                         <div id="nav-credentials" class="pure-controls" role="section" aria-labelledby="nav-credentials-section">
@@ -163,7 +187,7 @@
                                                      th:data-credAction="Edit" th:data-credId="${cred.credentialId}" th:data-credUrl="${cred.url}" th:data-credUsername="${cred.username}" th:data-credPassword="${cred.password}"
                                                             onclick="showCredModal(this.getAttribute('data-credAction'), this.getAttribute('data-credId'), this.getAttribute('data-credUrl'), this.getAttribute('data-credUsername'), this.getAttribute('data-credPassword'))">Edit</button>
                                                 </a>
-                                                <a th:href="@{/home/{id}(id=${cred.credentialId},action='deleteCredential')}">
+                                                <a th:href="@{/home/credential/{id}(id=${cred.credentialId})}">
                                                     <button th:class="${'credDelete' + cred.credentialId}" id="deleteCredential" type="button" class="pure-button">Delete</button>
                                                 </a>
                                         </td>
@@ -185,7 +209,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form class="pure-form pure-form-aligned" action="#" th:action="@{/home}" th:object="${credentialsForm}" method="POST">
+                                            <form class="pure-form pure-form-aligned" action="#" th:action="@{/home/credential}" th:object="${credentialsForm}" method="POST">
                                                 <input type="hidden" name="credentialId" id="credential-id">
                                                 <input type="hidden" name="credActionType" id="cred-action-type">
                                                 <fieldset class="pure-control-group">
@@ -233,11 +257,11 @@
 
         <script th:inline="javascript" type="text/javascript">
             // For opening the note modal
-            function showNoteModal(noteId, noteTitle, noteDescription) {
+            function showNoteModal(noteAction, noteId, noteTitle, noteDescription) {
                 $('#note-id').val(noteId ? noteId : '');
+                $('#note-action-type').val(noteAction ? noteAction : 'Add');
                 $('#note-title').val(noteTitle ? noteTitle : '');
                 $('#note-description').val(noteDescription ? noteDescription : '');
-                $('#noteModal').modal('show');
 
             }
 
@@ -248,7 +272,6 @@
                 $('#credential-url').val(url ? url : '');
                 $('#credential-username').val(username ? username : '');
                 $('#credential-password').val(password ? password : '');
-                //$('#credentialModal').modal('show');
             }
         </script>
     </body>

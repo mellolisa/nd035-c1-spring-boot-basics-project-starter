@@ -110,7 +110,7 @@ class CredentialTests {
         inputField.submit();
         Thread.sleep(1000);
 
-        List<WebElement> successResults = driver.findElements(By.className("my-notify-success"));
+        List<WebElement> successResults = driver.findElements(By.className("cred-notify-success"));
         Assertions.assertEquals("The Add action was successful.", successResults.get(0).getText());
 
         verifyViewValues(id, url, username, password);
@@ -121,7 +121,7 @@ class CredentialTests {
         inputField.click();
         Thread.sleep(1000);
 
-        List<WebElement> successResults = driver.findElements(By.className("my-notify-success"));
+        List<WebElement> successResults = driver.findElements(By.className("cred-notify-success"));
         Assertions.assertEquals("The Delete action was successful.", successResults.get(0).getText());
         Assertions.assertThrows(Exception.class, () ->  inputField.click());
     }
@@ -148,7 +148,7 @@ class CredentialTests {
         inputField.submit();
         Thread.sleep(2000);
 
-        List<WebElement> successResults = driver.findElements(By.className("my-notify-success"));
+        List<WebElement> successResults = driver.findElements(By.className("cred-notify-success"));
         Assertions.assertEquals("The Edit action was successful.", successResults.get(0).getText());
 
         verifyViewValues(id, url, username, password);
