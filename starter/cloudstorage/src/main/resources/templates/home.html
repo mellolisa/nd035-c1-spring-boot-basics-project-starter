@@ -126,7 +126,7 @@
                     </div>
                     </details>
                     <h3>Credentials</h3>
-                    <details th:open="${toggleCredentials}">
+                    <details id="credSection" th:open="${toggleCredentials}">
                         <summary>Manage Credentials</summary>
                         <div class="my-notify-success" th:if="${credSuccess}">
                             <span th:text="${credSuccess}"></span>
@@ -159,12 +159,12 @@
                                     <tr th:each="cred : ${credentials}">
                                         <td>
                                                 <a href="#">
-                                                    <button id="editCredential" type="button" class="pure-button" data-toggle="modal" data-target="#credentialModal"
+                                                    <button th:class="${'credEdit' + cred.credentialId}" id="editCredential" type="button" class="pure-button" data-toggle="modal" data-target="#credentialModal"
                                                      th:data-credAction="Edit" th:data-credId="${cred.credentialId}" th:data-credUrl="${cred.url}" th:data-credUsername="${cred.username}" th:data-credPassword="${cred.password}"
                                                             onclick="showCredModal(this.getAttribute('data-credAction'), this.getAttribute('data-credId'), this.getAttribute('data-credUrl'), this.getAttribute('data-credUsername'), this.getAttribute('data-credPassword'))">Edit</button>
                                                 </a>
                                                 <a th:href="@{/home/{id}(id=${cred.credentialId},action='deleteCredential')}">
-                                                    <button id="deleteCredential" type="button" class="pure-button">Delete</button>
+                                                    <button th:class="${'credDelete' + cred.credentialId}" id="deleteCredential" type="button" class="pure-button">Delete</button>
                                                 </a>
                                         </td>
                                             <th scope="row" th:text="${{cred.url}}">Example Credential URL</th>

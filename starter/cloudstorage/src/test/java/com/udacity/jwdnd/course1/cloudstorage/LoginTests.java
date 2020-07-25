@@ -37,12 +37,6 @@ class LoginTests {
 	}
 
 	@Test
-	public void getLoginPage() {
-		driver.get("http://localhost:" + this.port + "/login");
-		Assertions.assertEquals("Super Duper Drive - Login", driver.getTitle());
-	}
-
-	@Test
 	public void loginPageTests() throws InterruptedException {
 		//start the driver, open chrome to our target url
 		driver.get("http://localhost:" + this.port + "/signup");
@@ -65,6 +59,7 @@ class LoginTests {
 
 		//navigate to login page
 		driver.get("http://localhost:" + this.port + "/login");
+		Assertions.assertEquals("Super Duper Drive - Login", driver.getTitle());
 
 		//login error
 		inputField = driver.findElement(By.id("inputUsername"));

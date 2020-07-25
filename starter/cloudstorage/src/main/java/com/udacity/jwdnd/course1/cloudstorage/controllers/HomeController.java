@@ -40,10 +40,10 @@ public class HomeController {
 
         if(credentialService.deleteCredential(id) == 1){
             System.out.println("Deleted credential: " + id);
-            model.addAttribute("credSuccess", "The delete action was successful.");
+            model.addAttribute("credSuccess", "The Delete action was successful.");
         }
         else {
-            model.addAttribute("credError", "The delete action was unsuccessful.");
+            model.addAttribute("credError", "The Delete action was unsuccessful.");
         }
 
         showHomePage(authentication, credentialsForm, model);

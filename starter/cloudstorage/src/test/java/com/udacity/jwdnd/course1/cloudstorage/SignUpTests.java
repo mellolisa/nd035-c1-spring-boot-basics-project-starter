@@ -37,15 +37,10 @@ class SignUpTests {
 	}
 
 	@Test
-	public void getSignUpPage() {
-		driver.get("http://localhost:" + this.port + "/signup");
-		Assertions.assertEquals("Super Duper Drive - Sign Up", driver.getTitle());
-	}
-
-	@Test
 	public void signUpPageTests() throws InterruptedException {
 		//start the driver, open chrome to our target url
 		driver.get("http://localhost:" + this.port + "/signup");
+		Assertions.assertEquals("Super Duper Drive - Sign Up", driver.getTitle());
 
 		//test first name error
 		WebElement inputField = driver.findElement(By.id("inputFirstName"));

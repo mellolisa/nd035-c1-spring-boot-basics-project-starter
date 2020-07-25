@@ -29,23 +29,15 @@ class CredentialTests {
         this.driver = new ChromeDriver();
     }
 
-    /*
     @AfterEach
     public void afterEach() {
         if (this.driver != null) {
             driver.quit();
         }
     }
-    */
 
     @Test
-    public void getLoginPage() {
-        driver.get("http://localhost:" + this.port + "/login");
-        Assertions.assertEquals("Super Duper Drive - Login", driver.getTitle());
-    }
-
-    @Test
-    public void credentialTests() throws InterruptedException {
+    public void credentialHappyPathTests() throws InterruptedException {
         //start the driver, open chrome to our target url
         driver.get("http://localhost:" + this.port + "/signup");
 
@@ -77,11 +69,78 @@ class CredentialTests {
 
         inputField.submit();
         Thread.sleep(1000);
+        Assertions.assertEquals("Super Duper Drive - Home", driver.getTitle());
 
-        //delete credential
-        driver.get("http://localhost:" + this.port + "/home/0?action=credentialDelete");
+        //open credentials section
+        inputField = driver.findElement(By.id("credSection"));
+        inputField.click();
+
+        //add credentials
+        addCredentials("1", "http://wwww.test.com", "testing", "test123");
+        addCredentials("2", "http://www.testagain.com", "test2", "test123123");
+        addCredentials("3", "http://www.test3.com", "test3", "test333");
+
+        //edit credentials
+        //editCredentials("credEdit1", "http://wwww.test.comaaa", "testingaaa", "test123aaa");
+        //editCredentials("credEdit2", "http://www.testagain.comaaa", "test2aaa", "test123123aaa");
+        //editCredentials("credEdit3", "http://www.test3.comaaa", "test3aaa", "test333aaa");
+
+        //delete credentials
+        deleteCredentials("credDelete1");
+        deleteCredentials("credDelete2");
+        deleteCredentials("credDelete3");
+
+
+    }
+
+    public void addCredentials(String id, String url, String username, String password ) throws InterruptedException{
+        WebElement inputField = driver.findElement(By.linkText("+ Add a New Credential"));
+        inputField.click();
         Thread.sleep(1000);
 
+        inputField = driver.findElement(By.id("credential-url"));
+        inputField.sendKeys(url);
+
+        inputField = driver.findElement(By.id("credential-username"));
+        inputField.sendKeys(username);
+
+        inputField = driver.findElement(By.id("credential-password"));
+        inputField.sendKeys(password);
+
+        inputField.submit();
+        Thread.sleep(1000);
+
+        List<WebElement> successResults = driver.findElements(By.className("my-notify-success"));
+        Assertions.assertEquals("The Add action was successful.", successResults.get(0).getText());
+    }
+
+    public void deleteCredentials(String className) throws InterruptedException{
+        WebElement inputField = driver.findElement(By.className(className));
+        inputField.click();
+        Thread.sleep(1000);
+
+        List<WebElement> successResults = driver.findElements(By.className("my-notify-success"));
+        Assertions.assertEquals("The Delete action was successful.", successResults.get(0).getText());
+    }
+
+    public void editCredentials(String className, String url, String username, String password) throws InterruptedException {
+        WebElement inputField = driver.findElement(By.className(className));
+        inputField.click();
+
+        inputField = driver.findElement(By.id("credential-url"));
+        inputField.sendKeys(url);
+
+        inputField = driver.findElement(By.id("credential-username"));
+        inputField.sendKeys(username);
+
+        inputField = driver.findElement(By.id("credential-password"));
+        inputField.sendKeys(password);
+
+        inputField.submit();
+        Thread.sleep(2000);
+
+        List<WebElement> successResults = driver.findElements(By.className("my-notify-success"));
+        Assertions.assertEquals("The Edit action was successful.", successResults.get(0).getText());
     }
 
 }
