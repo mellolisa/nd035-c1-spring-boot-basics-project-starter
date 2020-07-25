@@ -115,7 +115,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="noteModalLabel">Note</h5>
+                                        <h2 class="modal-title" id="noteModalLabel">Note</h2>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -134,16 +134,19 @@
                                                     <textarea class="form-control" name="noteDescription" id="note-description" rows="5" maxlength="1000" required th:field="*{description}" th:value="*{description}"></textarea>
                                                 </p>
                                             </fieldset>
-                                            <button id="noteSubmit" type="submit" class="d-none"></button>
+                                            <div class="pure-controls">
+                                                <a href="#">
+                                                    <button class="pure-button pure-button-primary" type="submit" th:text="${noteActionType}">Save</button>
+                                                </a>
+                                            </div>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
                                         <div class="pure-controls">
                                             <a href="#">
-                                                <button class="pure-button pure-button-primary" type="submit" th:text="${noteActionType}">Save</button>
+                                                <button type="button" class="pure-button" data-dismiss="modal">Close</button>
                                             </a>
                                         </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -239,7 +242,6 @@
                                                 <button type="button" class="pure-button" data-dismiss="modal">Close</button>
                                             </a>
                                         </div>
-                                        <!-- <button type="button" class="btn btn-primary" onclick="$('#credentialSubmit').click();">Save changes</button> -->
                                     </div>
                                 </div>
                             </div>
