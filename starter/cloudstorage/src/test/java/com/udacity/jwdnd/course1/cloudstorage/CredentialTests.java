@@ -123,6 +123,7 @@ class CredentialTests {
 
         List<WebElement> successResults = driver.findElements(By.className("my-notify-success"));
         Assertions.assertEquals("The Delete action was successful.", successResults.get(0).getText());
+        Assertions.assertThrows(Exception.class, () ->  inputField.click());
     }
 
     public void editCredentials(String className, String url, String username, String password) throws InterruptedException {
