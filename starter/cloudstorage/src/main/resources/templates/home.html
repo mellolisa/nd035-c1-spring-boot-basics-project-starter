@@ -24,10 +24,16 @@
             <div id="contentDiv" style="clear: right;">
                 <div class="tab-content" id="nav-tabContent">
                     <h2>Files</h2>
-                    <details>
+                    <details id="fileSection" th:open="${toggleFiles}">
                         <summary>Manage Files</summary>
+                        <div class="file-notify-success my-notify-success" th:if="${fileSuccess}">
+                            <span th:text="${fileSuccess}"></span>
+                        </div>
+                        <div class="file-notify-error my-notify-error" th:if="${fileError}">
+                            <span th:text="${fileError}"</span>
+                        </div>
                         <div id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
-                        <form action="#" enctype="multipart/form-data" method="POST">
+                        <form action="#" enctype="multipart/form-data" method="POST" th:action="@{/home/file}" th:object="${fileForm}">
                             <div class="container">
                                 <div class="row" style="margin: 1em;">
                                     <div class="col-sm-2">
@@ -36,14 +42,19 @@
                                     <div class="col-sm-6">
                                         <input type="file" class="form-control-file" id="fileUpload" name="fileUpload">
                                     </div>
-                                    <div class="col-sm-4">
-                                        <button type="submit" class="btn btn-dark">Upload</button>
+                                    <div class="pure-controls">
+                                        <a href="#">
+                                            <button class="pure-button pure-button-primary" type="submit">Upload</button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </form>
+                        <div class="no-files" th:unless="${showFiles}">
+                            <p>No Files have been added to the system.</p>
+                        </div>
                         <div class="table-responsive">
-                            <table class="table table-striped" id="fileTable">
+                            <table th:object="${files}" id="fileTable" th:if="${showFiles}">
                                 <thead>
                                     <tr>
                                         <th style="width: 20%" scope="col"></th>
@@ -53,10 +64,14 @@
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <a target="_blank" class="btn btn-success">View</a>
-                                        <a  class="btn btn-danger">Delete</a>
+                                        <a th:href="#">
+                                            <button th:class="${'fileView' + file.fileId}" id="viewFile" type="button" class="pure-button">View</button>
+                                        </a>
+                                        <a th:href="@{/home/file/{id}(id=${file.fileId})}">
+                                            <button th:class="${'fileDelete' + file.fileId}" id="deleteFile" type="button" class="pure-button">Delete</button>
+                                        </a>
                                     </td>
-                                    <th scope="row">ExampleFile.txt</th>
+                                    <th th:class="${'fileViewName' + file.fileId}" scope="row" th:text="${{file.fileName}}">ExampleFile.txt</th>
                                 </tr>
                                 </tbody>
                             </table>
